@@ -1,0 +1,1 @@
+com.thebuff.compat.kubejs.TheBuffKubeJSPlugin

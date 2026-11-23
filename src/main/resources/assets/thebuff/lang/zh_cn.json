@@ -1,0 +1,27 @@
+{
+  "buff.thebuff.test_burn": "测试灼烧",
+  "buff.thebuff.test_swiftness": "测试迅捷",
+
+  "thebuff.hud.line": "◆ %s %s: %s",
+  "thebuff.hud.line.no_level": "◆ %s: %s",
+  "thebuff.hud.level": "Lv.%s",
+  "thebuff.duration.permanent": "永久",
+
+  "thebuff.jade.header": "特殊状态",
+  "thebuff.jade.line": "◆ %s %s: %s",
+
+  "thebuff.command.unknown_buff": "未知特殊状态：%s",
+  "thebuff.command.applied": "已对 %2$s 个实体附着 %1$s",
+  "thebuff.command.removed": "已从 %2$s 个实体移除 %1$s",
+  "thebuff.command.cleared": "已清除 %s 个特殊状态",
+  "thebuff.command.not_living": "目标不是生物实体",
+  "thebuff.command.list.empty": "%s 没有特殊状态",
+  "thebuff.command.list.line": "%1$s - %2$s %3$s %4$s <- %5$s",
+
+  "death.attack.thebuff.buff": "%1$s 被特殊状态击倒",
+  "death.attack.thebuff.buff.player": "%1$s 被 %2$s 的特殊状态击倒",
+  "death.attack.thebuff.buff.source": "%1$s 被 %2$s 的特殊状态击倒",
+  "death.attack.thebuff.buff_true": "%1$s 被特殊状态摧毁",
+  "death.attack.thebuff.buff_true.player": "%1$s 被 %2$s 的特殊状态摧毁",
+  "death.attack.thebuff.buff_true.source": "%1$s 被 %2$s 的特殊状态摧毁"
+}
