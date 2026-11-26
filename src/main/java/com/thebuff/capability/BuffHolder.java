@@ -11,6 +11,7 @@ import com.thebuff.api.BuffRemovalReason;
 import com.thebuff.api.BuffTickHandler;
 import com.thebuff.api.BuffType;
 import com.thebuff.api.DamageSpec;
+import com.thebuff.api.event.BuffRemovedEvent;
 import com.thebuff.network.BuffSync;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -19,6 +20,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.Nullable;
 
 import java.nio.charset.StandardCharsets;
@@ -355,6 +357,7 @@ public final class BuffHolder {
         }
         removeModifiers(removed);
         callOnExpire(removed, reason);
+        MinecraftForge.EVENT_BUS.post(new BuffRemovedEvent(entity, removed, reason));
         return removed;
     }
 

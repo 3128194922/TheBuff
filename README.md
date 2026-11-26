@@ -19,6 +19,8 @@ Minecraft 1.20.1 / Forge 47.x 的特殊状态（Buff）系统。
 - 玩家 HUD：右上角纯文本显示 `◆ 名称 Lv.N: 时间`，无图标、无粒子。
 - Jade：独立“特殊状态”区块，使用 `◆` 前缀和分类颜色，与原版药水效果区分。
 - KubeJS：`StartupEvents.registry('thebuff:buff', ...)` + `TheBuff` 全局 API。
+- KubeJS 事件：`TheBuffEvents.removed`（手动移除/清空/死亡等全部移除）与
+  `TheBuffEvents.expired`（定时状态到期）。
 
 ## 依赖
 
@@ -87,6 +89,14 @@ for (let i = 0; i < list.size(); i++) {
   const b = list.get(i)
   console.info(`${b.id} ${b.amplifier} ${b.duration}`)
 }
+
+// 手动移除 / 到期回调（server_scripts）
+TheBuffEvents.removed(event => {
+  if (event.manual) console.info(`${event.buffId} 被移除：${event.entity}`)
+})
+TheBuffEvents.expired(event => {
+  console.info(`${event.buffId} 到期：${event.entity}`)
+})
 ```
 
 详细说明见 `KUBEJS_API.md`。

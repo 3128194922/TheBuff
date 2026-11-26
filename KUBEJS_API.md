@@ -110,6 +110,53 @@ for (let i = 0; i < list.size(); i++) {
 
 建议所有会造成伤害的状态都传入附着者；不传时仍可附着，但伤害没有实体归属。
 
-## 4. 示例文件
+## 4. 移除与到期事件
+
+在 `kubejs/server_scripts/` 中监听。两个事件都只在服务端触发，载荷为只读快照（状态此时已移除）。
+
+```js
+// 任何原因被移除：manual（remove / clear 命令 / removeAll / removeCategory）、
+// death（死亡清空）、replaced、expired（到期）
+TheBuffEvents.removed(event => {
+  console.info(`${event.buffId} 从 ${event.entity} 移除，原因 ${event.reasonName}`)
+})
+
+// 仅定时状态自然到期；同时也会触发上面的 removed
+TheBuffEvents.expired(event => {
+  console.info(`${event.buffId} Lv.${event.amplifier + 1} 在 ${event.entity} 上到期`)
+})
+```
+
+### 事件字段
+
+| 属性/方法 | 说明 |
+|---|---|
+| `event.entity` | 被附着的 `LivingEntity` |
+| `event.player` | 玩家实体，非玩家为 `null` |
+| `event.instance` / `event.buff` | 被移除的 `BuffInstance` 快照 |
+| `event.type` | `BuffType` |
+| `event.id` | `ResourceLocation` |
+| `event.buffId` | 状态 id 字符串，例如 `thebuff:burn` |
+| `event.amplifier` | 等级（0 起） |
+| `event.duration` | 移除时的剩余 tick；永久状态为 `-1` |
+| `event.permanent` | 是否永久 |
+| `event.elapsedTicks` | 已存在 tick 数 |
+| `event.reason` | `BuffRemovalReason` 枚举 |
+| `event.reasonName` | 小写原因字符串：`removed` / `cleared` / `expired` / `death` / `replaced` |
+| `event.expired` | 是否到期 |
+| `event.manual` | 是否手动移除（`removed` 或 `cleared`） |
+| `event.source` | 附着者实体，未加载时为 `null` |
+| `event.sourceName` | 附着者名字，可能为 `null` |
+
+### 触发来源
+
+| 操作 | `reasonName` | 是否触发 `expired` |
+|---|---|---|
+| `/thebuff remove`、`TheBuff.remove`、`removeBySource`、`removeCategory` | `removed` | 否 |
+| `/thebuff clear`、`TheBuff.removeAll` | `cleared` | 否 |
+| 时长归零 | `expired` | 是 |
+| 死亡清空（`clearOnDeath`） | `death` | 否 |
+
+## 5. 示例文件
 
 参考 `examples/kubejs/` 下的启动脚本和服务端脚本。
